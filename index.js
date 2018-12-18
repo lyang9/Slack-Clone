@@ -12,7 +12,7 @@ const app = express();
 const server = new ApolloServer({ typeDefs, resolvers });
 server.applyMiddleware({ app });
 
-models.sequelize.sync().then(() => {
+models.sequelize.sync({ force: true }).then(() => {
   app.listen(4000);
 });
 
