@@ -1,19 +1,40 @@
 import express from 'express';
+// import bodyParser from 'body-parser';
 import { ApolloServer, gql } from 'apollo-server-express';
+import path from 'path';
+import { fileLoader, mergeTypes, mergeResolvers } from 'merge-graphql-schemas';
 
-import typeDefs from './schema';
-import resolvers from './resolvers';
 import models from './models';
 
-const PORT = 4000;
+const typeDefs = mergeTypes(fileLoader(path.join(__dirname, './schema')));
+
+const resolvers = mergeResolvers(fileLoader(path.join(__dirname, './resolvers')));
+
+const PORT = 8050;
 
 const app = express();
+
+// const graphqlEndpoint = '/graphql';
+
+// app.use(
+//   graphqlEndpoint,
+//   bodyParser.json(),
+//   graphqlExpress({
+//     schema,
+//     context: {
+//       models,
+//       user: {
+//         id: 1,
+//       },
+//     },
+//   }),
+// );
 
 const server = new ApolloServer({ typeDefs, resolvers });
 server.applyMiddleware({ app });
 
-models.sequelize.sync({ force: true }).then(() => {
-  app.listen(4000);
+models.sequelize.sync().then(() => {
+  app.listen(8050);
 });
 
 // app.listen({ port : PORT }, () =>
