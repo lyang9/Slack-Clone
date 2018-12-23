@@ -3,6 +3,7 @@ import express from 'express';
 import { ApolloServer, gql } from 'apollo-server-express';
 import path from 'path';
 import { fileLoader, mergeTypes, mergeResolvers } from 'merge-graphql-schemas';
+import cors from 'cors';
 
 import models from './models';
 
@@ -13,6 +14,8 @@ const resolvers = mergeResolvers(fileLoader(path.join(__dirname, './resolvers'))
 const PORT = 8050;
 
 const app = express();
+
+app.use(cors('*'));
 
 // const graphqlEndpoint = '/graphql';
 
