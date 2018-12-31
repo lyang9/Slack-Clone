@@ -33,7 +33,16 @@ app.use(cors('*'));
 //   }),
 // );
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({ 
+  typeDefs, 
+  resolvers,
+  context: {
+    models,
+    user: {
+      id: 1, 
+    }
+  }
+});
 server.applyMiddleware({ app });
 
 models.sequelize.sync().then(() => {
