@@ -12,6 +12,7 @@ export default {
         await models.User.create({ ...otherArgs, password: hashedPassword });
         return true;
       } catch (err) {
+        console.log(err);
         return false;
       }
     },
